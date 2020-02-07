@@ -1,4 +1,4 @@
 import math
-print(math.pi)
-print(math.tan(45))
-print(math.tan(math.pi/4))
+import numpy as np
+a = np.zeros((15, 5))
+print(a)

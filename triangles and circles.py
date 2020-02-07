@@ -227,8 +227,7 @@ while 1:
 
 
     #cv2.line(frame, p, v1, (255,0,0), 2)
-    cv2.line(frame, p, v2, (255,0,0), 2)
-    cv2.line(frame, p, v3, (255,0,0), 2)
+
     #Lp_1 = getDistance(p, v1)
     Lp_2 = getDistance(p, v2)
     Lp_3 = getDistance(p, v3)
