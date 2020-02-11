@@ -66,7 +66,10 @@ def defineStringsAndConnectPoints(number_of_points, image, color_by_value):    #
             if not color_by_value:
                 color = hsv2bgr((20 * i, 180, 180))
             else:
+                p2 = number_of_points
+                p1 = i + 1
                 color = array_of_string_values[p2, p1]
+                color = (color, color, color)
             list_of_string_definitions.append(drawString(number_of_points, i + 1, color, image))
         number_of_points = number_of_points - 1
         defineStringsAndConnectPoints(number_of_points, image, color_by_value)
@@ -124,7 +127,7 @@ def assignValuesToStrings():
         m, b = stringToLine(string)
         average_value, total_value = valueOfLine(m, b, domain, img_g)
 
-        array_of_string_values[p2, p1] = int(total_value)
+        array_of_string_values[p2, p1] = int(average_value)
 
 
 def pixelRange(string):                             #given a string, returns the range from lower to upper x that the string is in
@@ -171,7 +174,8 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 
 number_of_rows = number_of_points - 1
-path = r'C:\Users\spenc\Downloads\Anchor.png'   #image path
+path = "/home/remoteadmin/Downloads/circle.png"
+#path = r"C:\Users\spenc\Downloads\Anchor.png"   #image path
 img = cv2.imread(path)
 img_g = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)   #the gray imported image image
 
