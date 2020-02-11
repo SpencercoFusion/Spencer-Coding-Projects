@@ -257,9 +257,9 @@ while 1:
 
 
     Cx, Cy = definePointOfIntersection(angleBisectors[0], angleBisectors[1])
-    center = (Cx, Cy)
+    center = (int(Cx), int(Cy))
     Cr = getRadiusOfCircle(lines[0], center)
-    cv2.circle(frame, center, round(Cr), (255, 0, 0) )
+    cv2.circle(frame, center, int(Cr), (255, 0, 0) )
     
     
     #print(L1_2, '   ', L2_3, '   ', L3_1)
