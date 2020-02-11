@@ -1,7 +1,11 @@
+
 import cv2 as cv2
 from cv2 import cv2
 import numpy as np
 import math as m
+
+scale_percent = 100
+blocks_per_width = 35
 
 def nothing(x):
     pass
@@ -29,6 +33,7 @@ def hsv_to_bgr(h_s_v):
 
 def cutAndResize(img, dimensions):
     print("")
+    cut = img
     orig_height = len(img)
     orig_width = len(img[0])
     print("original height: " + str(orig_height))
@@ -96,24 +101,20 @@ cv2.createTrackbar("hue", "values", 90, 180, nothing)
 cv2.createTrackbar("sat", "values", 90, 255, nothing)
 cv2.createTrackbar("val", "values", 90, 255, nothing)
 cv2.createTrackbar("hue p", "values", 100, 100, nothing)
-cv2.createTrackbar("sat p", "values", 82, 100, nothing)
-cv2.createTrackbar("val p", "values", 54, 100, nothing)
+cv2.createTrackbar("sat p", "values", 82, 100, nothing) #82
+cv2.createTrackbar("val p", "values", 54, 100, nothing) #54
 
-block_size = 100
 
-block_paths = list(
-    r"C:\Users\spenc\Downloads\better_wade.jpg"
-    )
-image_path = r"C:\Users\spenc\Downloads\me3.jpg"
-#wide_flower_path = r"C:\Users\spenc\Downloads\download.jpg"
-list_of_blocks = []
-for block_image in block_paths:
-    block = cv2.imread(block_image)  #building "blocks" image will be made of 
-    block = cutAndResize(block, (block_size, block_size))
-    list_of_blocks.append(block)
+block_paths = r"C:\Users\spenc\Downloads\wade1.jpg"
+image_path = r"C:\Users\spenc\Downloads\Spencer32.jpg"
 
-image = cv2.imread(image_path)  
+image = cv2.imread(image_path) 
+
+img_width = len(image[0])
+block_size = m.floor(img_width/blocks_per_width)
 image = trimImageToUnit(image, block_size)#image that wants to be constructed
+block = cv2.imread(block_paths)  #building "blocks" image will be made of 
+block = cutAndResize(block, (block_size, block_size))
 #wide_flower = cv2.imread(wide_flower_path)
 #im_b, im_g, im_r = cv2.split(image) #splits into blue, green, red channels
 #im_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -147,8 +148,7 @@ def createMosaic(h_p, s_p, v_p):
     return final_tiled
 
 image = cv2.imread(image_path)  
-
-scale_percent = 100 # percent of original size
+# percent of original size
 width = int(image.shape[1] * scale_percent / 100)
 height = int(image.shape[0] * scale_percent / 100)
 dim = (width, height)
@@ -174,7 +174,7 @@ final_tiled = createMosaic(hue_p, sat_p, val_p)
 bgr_mono = turnMonoChromatic(image, hue, sat, val, 1, 0, 1)
 
 cv2.imwrite(r"C:\Users\spenc\Documents\eeeee.jpg", final_tiled)
-
+cv2.imwrite(r"C:\Users\noone\Documents\biger pp.jpg", final_tiled)
 while True:
 
 
@@ -185,3 +185,7 @@ while True:
     key_value = cv2.waitKey(30)
     if key_value == ord('q'):
         break
+
+
+
+
