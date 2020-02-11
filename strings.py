@@ -89,14 +89,14 @@ def nextColor():
     return bgr
 
 def cvWindows():
-    global frame 
+    global frame, final_strings
     frame = np.zeros(shape=(frame_height, frame_width, 3), dtype=np.uint8)
-
+    final_strings = frame
 def connectPoints(number_of_points):
     
     if number_of_points > 1:
         for i in range(number_of_points - 1):
-           list_of_strings.append(makeString(number_of_points, i + 1, hsv2bgr((20 * i, 180, 180))))
+           list_of_strings.append(makeString(number_of_points, i + 1, hsv2bgr((20 * i, 180, 180)), frame))
         number_of_points = number_of_points - 1
         connectPoints(number_of_points)
 
@@ -139,10 +139,10 @@ def createIntersections(list_of_strings):
     pass
             
 
-def makeString(id1, id2, color):
+def makeString(id1, id2, color, image_to_draw):
     p1 = pointToCoord(id1)
     p2 = pointToCoord(id2)
-    cv2.line(frame, p1, p2, color, 1)
+    cv2.line(image_to_draw, p1, p2, color, 1)
     if id1 < id2:
         t_string = (id1, id2)
     else:
@@ -277,7 +277,7 @@ drawPixels(dictionary_of_pixels, cut_out_image)
 for t_string in dictionary_of_strings:
     value_for_this_string = dictionary_of_strings[t_string]
     p1, p2 = string
-    makeString(p1, p2, (value_for_this_string, value_for_this_string, value_for_this_string))
+    makeString(p1, p2, (value_for_this_string, value_for_this_string, value_for_this_string), final_strings)
 
 print("dictionary of strings:")
 print(dictionary_of_strings)
@@ -287,7 +287,7 @@ while(1):
     cv2.imshow("resized", resized_image)
     cv2.imshow("cut out", cut_out_image)
     cv2.imshow('strings', frame)
-
+    cv2.imshow("final_strings", final_strings)
 
     key_value = cv2.waitKey(30)
     if key_value == ord('q'):
