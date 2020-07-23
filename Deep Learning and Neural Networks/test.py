@@ -1,0 +1,1 @@
+magicWord = input
